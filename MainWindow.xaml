@@ -1,0 +1,267 @@
+﻿<Window x:Class="JegServiceStarter.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="JegServiceStarter"
+        Width="1100"
+        Height="640"
+        MinWidth="1100"
+        MinHeight="640">
+    <Grid>
+        <!-- ================= 整体上下平分 ================= -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>   <!-- 上半 -->
+            <RowDefinition Height="*"/>   <!-- 下半 -->
+        </Grid.RowDefinitions>
+
+        <!-- ================= 上半 ================= -->
+        <Grid Grid.Row="0" Margin="20">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>      <!-- 文件预览 -->
+                <ColumnDefinition Width="*"/>      <!-- 文件选取 -->
+                <ColumnDefinition Width="500"/>    <!-- 操作区固定 -->
+            </Grid.ColumnDefinitions>
+
+            <!-- 文件预览 -->
+            <Grid Grid.Column="0" Margin="0,0,10,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- 标题 + 按钮区域 -->
+                <Grid Grid.Row="0" Margin="0,0,0,10">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- 标题 -->
+                    <TextBlock Text="文件预览"
+                               FontSize="26"
+                               VerticalAlignment="Center"/>
+
+                    <!-- 右侧按钮区域 -->
+                    <Grid Grid.Column="1" Margin="15,0,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Content="刷新"
+                                FontSize="12"
+                                Height="28"
+                                Margin="0,0,5,0"
+                                Click="Refresh_Click"/>
+
+                        <Button Grid.Column="1"
+                                Content="打开文件夹"
+                                FontSize="12"
+                                Height="28"
+                                Margin="5,0,0,0"
+                                Click="OpenFolder_Click"/>
+                    </Grid>
+                </Grid>
+
+                <!-- 文件列表 -->
+                <ListBox x:Name="AllFilesList"
+                         Grid.Row="1"/>
+
+            </Grid>
+
+
+
+            <!-- 文件选取 -->
+            <Grid Grid.Column="1" Margin="10,0,10,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="文件选取"
+                           FontSize="26"
+                           Margin="0,0,0,10"/>
+
+                <ListBox x:Name="HtmlList"
+                         Grid.Row="1"
+                         SelectionMode="Single"
+                         SelectionChanged="HtmlList_SelectionChanged">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <RadioButton Content="{Binding}"
+                                                     IsChecked="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                     FontSize="16"
+                                                     Margin="6,4"
+                                                     VerticalContentAlignment="Center"
+                                                     Checked="HtmlRadio_Checked"/>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                </ListBox>
+            </Grid>
+
+
+            <!-- 操作区（固定在上半右上） -->
+            <Grid Grid.Column="2"
+                  VerticalAlignment="Top"
+                  Height="300">
+
+                <StackPanel>
+
+                    <!-- IP / 端口 / 证书 -->
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="当前IP"
+                                   FontSize="18"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"/>
+
+                        <!-- 当前IP：纯数字显示，无方框 -->
+                        <TextBlock x:Name="SelectedIpText"
+                                   FontSize="18"
+                                   FontWeight="Bold"
+                                   VerticalAlignment="Center"
+                                   Margin="0,0,10,0"
+                                   Text=""/>
+
+                        <!-- 网络变化后刷新本机地址 -->
+                        <Button x:Name="RefreshNetworkButton"
+                                Content="刷新"
+                                FontSize="12"
+                                Height="24"
+                                Padding="8,0"
+                                Margin="0,0,20,0"
+                                VerticalAlignment="Center"
+                                Click="RefreshNetwork_Click"/>
+
+                        <TextBlock Text="端口"
+                                   FontSize="18"
+                                   Margin="5,0,0,0"
+                                   VerticalAlignment="Center"/>
+
+                        <TextBox Width="65"
+                                 x:Name="PortBox"
+                                 Text="8000"
+                                 FontSize="16"
+                                 Margin="8,0"
+                                 TextChanged="NetworkSettingChanged"/>
+
+                        <CheckBox x:Name="HttpsCheck"
+                                  Content="证书"
+                                  FontSize="16"
+                                  Margin="5,0"
+                                  VerticalAlignment="Center"
+                                  Checked="NetworkSettingChanged"
+                                  Unchecked="NetworkSettingChanged"/>
+                    </StackPanel>
+
+                    <!-- 链接区域（标题单独一行，下方三个网址） -->
+                    <StackPanel Margin="0,5,0,0">
+
+                        <TextBlock Text="将会运行在"
+                                   FontSize="22"
+                                   Margin="0,0,0,4"/>
+
+                        <!-- 网址列表（动态生成：每个IP一组三行，多IP时成组显示） -->
+                        <StackPanel x:Name="LinksPanel"/>
+
+                    </StackPanel>
+
+                    <!-- 双按钮并排（紧凑） -->
+                    <Grid Margin="0,10,0,0">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="RunButton"
+                                Grid.Column="0"
+                                Content="运行"
+                                Background="#39FF14"
+                                FontSize="20"
+                                Height="45"
+                                BorderThickness="0"
+                                Click="Start_Click"/>
+
+                        <Button x:Name="StopButton"
+                                Grid.Column="2"
+                                Content="停止"
+                                Background="Red"
+                                Foreground="White"
+                                FontSize="20"
+                                Height="45"
+                                BorderThickness="0"
+                                Click="Stop_Click"/>
+                    </Grid>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- ================= 下半 ================= -->
+        <Grid Grid.Row="1" Margin="0">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- 日志 -->
+            <Grid Grid.Column="0" Margin="20,0,10,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="日志"
+                           FontSize="26"
+                           Margin="0,0,0,0"/>
+
+                <RichTextBox x:Name="LogBox"
+                         Grid.Row="1"
+                         Margin="0,10,0,20"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         IsReadOnly="True"/>
+            </Grid>
+
+
+            <!-- 命令区 -->
+            <Grid Grid.Column="1" Margin="10,0,20,0">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="35"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="命令区"
+                           FontSize="26"
+                           Margin="0,0,0,10"/>
+
+                <!-- 矮输入框 -->
+                <TextBox x:Name="CommandInputBox"
+                         Grid.Row="1"
+                         Height="30"
+                         VerticalAlignment="Top"
+                         KeyDown="CommandInputBox_KeyDown"/>
+
+                <!-- 命令历史 -->
+                <RichTextBox x:Name="CommandHistoryBox"
+                         Grid.Row="2"
+                         Margin="0,10,0,20"
+                         AcceptsReturn="True"
+                         VerticalScrollBarVisibility="Auto"
+                         IsReadOnly="True"/>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>

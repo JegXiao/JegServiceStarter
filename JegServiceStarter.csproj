@@ -1,0 +1,34 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net9.0-windows</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <UseWPF>true</UseWPF>
+        <ApplicationIcon>app.ico</ApplicationIcon>
+        <Version>2.1.0</Version>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.3.9" />
+        <FrameworkReference Include="Microsoft.AspNetCore.App" />
+    </ItemGroup>
+
+    <!-- Release 构建结束后：单文件发布并把独立 EXE 导出到 export 文件夹（文件名带版本号） -->
+    <Target Name="ExportToExportFolder"
+            AfterTargets="Build"
+            Condition="'$(Configuration)'=='Release' and '$(JegExportRunning)'!='1'">
+        <Exec Command="dotnet publish &quot;$(MSBuildProjectFile)&quot; -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -p:JegExportRunning=1 -o &quot;$(MSBuildProjectDirectory)\obj\publish-stage&quot;" />
+        <PropertyGroup>
+            <ExportExeName>JegServiceStarter$([System.Version]::Parse('$(Version)').Major).$([System.Version]::Parse('$(Version)').Minor).exe</ExportExeName>
+        </PropertyGroup>
+        <ItemGroup>
+            <OldExportExe Include="$(MSBuildProjectDirectory)\export\JegServiceStarter*.exe" />
+        </ItemGroup>
+        <Delete Files="@(OldExportExe)" />
+        <Copy SourceFiles="$(MSBuildProjectDirectory)\obj\publish-stage\JegServiceStarter.exe"
+              DestinationFiles="$(MSBuildProjectDirectory)\export\$(ExportExeName)" />
+    </Target>
+
+</Project>
