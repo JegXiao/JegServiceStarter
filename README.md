@@ -33,8 +33,8 @@
 ## 快速开始 | Quick Start
 
 ```bash
-git clone https://github.com/JegXiao/<repo>.git
-cd <repo>
+git clone https://github.com/JegXiao/JegServiceStarter.git
+cd JegServiceStarter
 
 # 开发调试运行（Debug）
 dotnet run
