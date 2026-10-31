@@ -92,6 +92,7 @@ Everything is configured in the UI; there is no config file:
 - **首次启动稍慢**：单文件自包含 EXE 首次运行要把本地库解压到临时目录，慢 1–2 秒属正常
   **Slow first launch**: the self-contained EXE extracts native libraries to a temp dir on first run — 1–2 seconds is normal
 
-## 许可证 | License
+## 版权 | Copyright
 
-[MIT](LICENSE)
+版权所有 © 2026 JegXiao，保留所有权利。未经许可不得复制、分发或修改本项目代码。
+Copyright © 2026 JegXiao. All rights reserved. Copying, distribution or modification of this code is not permitted without permission.
