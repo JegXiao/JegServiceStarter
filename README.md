@@ -1,5 +1,7 @@
 # 局域网 Web 服务器快速启动器 | JegServiceStarter
 
+[![Build and Release](https://github.com/JegXiao/JegServiceStarter/actions/workflows/release.yml/badge.svg)](https://github.com/JegXiao/JegServiceStarter/actions/workflows/release.yml)
+
 > 一键把 EXE 所在文件夹变成局域网 HTTP/HTTPS 服务器的 Windows 桌面工具（WPF + ASP.NET Core Kestrel），无需命令行。
 > A Windows desktop tool (WPF + ASP.NET Core Kestrel) that turns the folder containing the EXE into a LAN HTTP/HTTPS server with one click — no command line needed.
 
@@ -9,7 +11,10 @@
 Download the prebuilt EXE directly (self-contained single file, no runtime required):
 
 - **最新版 | Latest**：<https://github.com/JegXiao/JegServiceStarter/releases/latest>
-- **v2.1 直链 | direct link**：<https://github.com/JegXiao/JegServiceStarter/releases/download/v2.1/JegServiceStarter2.1.exe>
+- **v2.2 直链 | direct link**：<https://github.com/JegXiao/JegServiceStarter/releases/download/v2.2/JegServiceStarter2.2.exe>
+
+EXE 由 GitHub Actions 在推送 `v*` 标签时自动编译发布（工作流：[release.yml](.github/workflows/release.yml)，也可在 [Actions 页面](https://github.com/JegXiao/JegServiceStarter/actions)手动触发）。
+The EXE is built and released automatically by GitHub Actions whenever a `v*` tag is pushed (see [release.yml](.github/workflows/release.yml); manual runs via the [Actions page](https://github.com/JegXiao/JegServiceStarter/actions)).
 
 ## 功能特性 | Features
 
