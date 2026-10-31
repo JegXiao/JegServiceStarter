@@ -4,7 +4,7 @@
 
 > 一键把 EXE 所在文件夹变成局域网 HTTP/HTTPS 服务器的 Windows 桌面工具（WPF + ASP.NET Core Kestrel），无需命令行。
 
-**简体中文** · [ English](#english)
+**中文** · [ English](#english)
 
 ---
 
@@ -96,7 +96,7 @@ dotnet publish -c Release -r win-x64 --self-contained true \
 
 > A Windows desktop tool (WPF + ASP.NET Core Kestrel) that turns the folder containing the EXE into a LAN HTTP/HTTPS server with one click — no command line needed.
 
-[简体中文](#局域网-web-服务器快速启动器--jegservicestarter) · **English**
+[中文](#局域网-web-服务器快速启动器--jegservicestarter) · **English**
 
 ---
 
