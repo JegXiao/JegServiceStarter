@@ -3,6 +3,14 @@
 > 一键把 EXE 所在文件夹变成局域网 HTTP/HTTPS 服务器的 Windows 桌面工具（WPF + ASP.NET Core Kestrel），无需命令行。
 > A Windows desktop tool (WPF + ASP.NET Core Kestrel) that turns the folder containing the EXE into a LAN HTTP/HTTPS server with one click — no command line needed.
 
+## 下载 | Download
+
+直接下载编译好的 EXE（自包含单文件，无需安装运行时）：
+Download the prebuilt EXE directly (self-contained single file, no runtime required):
+
+- **最新版 | Latest**：<https://github.com/JegXiao/JegServiceStarter/releases/latest>
+- **v2.1 直链 | direct link**：<https://github.com/JegXiao/JegServiceStarter/releases/download/v2.1/JegServiceStarter2.1.exe>
+
 ## 功能特性 | Features
 
 - **文件托管**：以 EXE 所在目录为根目录，托管 HTML/CSS/JS/图片等静态文件
